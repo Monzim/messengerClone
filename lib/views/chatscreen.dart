@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:msg_clone/helperFunctions/sharedpre_helper.dart';
+import 'package:msg_clone/services/database.dart';
+import 'package:random_string/random_string.dart';
 
 class ChatScreen extends StatefulWidget {
   final String chatWithUserName, name;
@@ -12,6 +14,7 @@ class ChatScreen extends StatefulWidget {
 class _ChatScreenState extends State<ChatScreen> {
   String chatRoomId, messageId = "";
   String myName, myProfilePic, myUserName, myEmail;
+  TextEditingController messageTextEditingController = TextEditingController();
 
   getMyInfoFromSharedPreferences() async {
     myName = await SharedPreferenceHelper().getDisplayName();
@@ -27,6 +30,45 @@ class _ChatScreenState extends State<ChatScreen> {
       return "$b\_$a";
     } else {
       return "$a\_$b";
+    }
+  }
+
+  addMessage(bool sentClicked) {
+    if (messageTextEditingController.text != "") {
+      String message = messageTextEditingController.text;
+
+      var lastMessageTs = DateTime.now();
+      Map<String, dynamic> messageInfoMap = {
+        "message": message,
+        "sendBy": myUserName,
+        "ts": lastMessageTs,
+        "imgUrl": myProfilePic
+      };
+
+      //messgerId
+      if (messageId == "") {
+        messageId = randomAlphaNumeric(12);
+      }
+
+      DatabaseMethods()
+          .addMessage(chatRoomId, messageId, messageInfoMap)
+          .then((value) {
+        Map<String, dynamic> lastMessageInfoMap = {
+          "lastMessage": message,
+          "lastSendTs": lastMessageTs,
+          "lastMessageSendBy": myUserName
+        };
+
+        DatabaseMethods().updateLastMessageSend(chatRoomId, lastMessageInfoMap);
+
+        if (sentClicked) {
+          //remove the message of TextFiled
+          messageTextEditingController.text = "";
+
+          //make message id blank to get regenerated on next message send
+          messageId = "";
+        }
+      });
     }
   }
 
@@ -63,6 +105,10 @@ class _ChatScreenState extends State<ChatScreen> {
                   children: [
                     Expanded(
                         child: TextField(
+                      controller: messageTextEditingController,
+                      onChanged: (value) {
+                        addMessage(false);
+                      },
                       decoration: InputDecoration(
                         hintText: "type a message",
                         hintStyle: TextStyle(
@@ -71,7 +117,13 @@ class _ChatScreenState extends State<ChatScreen> {
                         border: InputBorder.none,
                       ),
                     )),
-                    Icon(Icons.send),
+
+                    //send Button
+                    GestureDetector(
+                        onTap: () {
+                          addMessage(true);
+                        },
+                        child: Icon(Icons.send)),
                   ],
                 ),
               ),

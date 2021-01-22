@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:msg_clone/helperFunctions/sharedpre_helper.dart';
 import 'package:msg_clone/services/auth.dart';
 import 'package:msg_clone/services/database.dart';
 import 'package:msg_clone/views/chatscreen.dart';
@@ -13,9 +14,26 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   bool isSearching = false;
   Stream userStream;
+  String myName, myProfilePic, myUserName, myEmail;
 
   TextEditingController searchUserNameEditingController =
       TextEditingController();
+
+  getMyInfoFromSharedPreferences() async {
+    myName = await SharedPreferenceHelper().getDisplayName();
+    myProfilePic = await SharedPreferenceHelper().getProfileUrl();
+    myUserName = await SharedPreferenceHelper().getUserName();
+    myEmail = await SharedPreferenceHelper().getUserEmail();
+    setState(() {});
+  }
+
+  getChatRoomIdByUserName(String a, String b) {
+    if (a.substring(0, 1).codeUnitAt(0) > b.substring(0, 1).codeUnitAt(0)) {
+      return "$b\_$a";
+    } else {
+      return "$a\_$b";
+    }
+  }
 
   onSearchButtonClick() async {
     isSearching = true;
@@ -28,6 +46,15 @@ class _HomeState extends State<Home> {
   Widget searchFieldUserTile({String profileUrl, name, username, email}) {
     return GestureDetector(
       onTap: () {
+        // print("you fool this is me my name $myUserName and 2nd $username");
+        var chatRoomId = getChatRoomIdByUserName(myUserName, username);
+        Map<String, dynamic> chatRoomInfoMap = {
+          "users": [myUserName, username]
+        };
+
+        DatabaseMethods().createChatRoom(chatRoomId, chatRoomInfoMap);
+
+        //before going to charRoom
         Navigator.push(
             context,
             MaterialPageRoute(
@@ -86,6 +113,12 @@ class _HomeState extends State<Home> {
 
   Widget chatRoomsList() {
     return Container();
+  }
+
+  @override
+  void initState() {
+    getMyInfoFromSharedPreferences();
+    super.initState();
   }
 
   @override
