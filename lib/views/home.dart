@@ -1,5 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:msg_clone/services/auth.dart';
+import 'package:msg_clone/services/database.dart';
+import 'package:msg_clone/views/chatscreen.dart';
 import 'package:msg_clone/views/signin.dart';
 
 class Home extends StatefulWidget {
@@ -8,6 +11,83 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  bool isSearching = false;
+  Stream userStream;
+
+  TextEditingController searchUserNameEditingController =
+      TextEditingController();
+
+  onSearchButtonClick() async {
+    isSearching = true;
+    setState(() {});
+    userStream = await DatabaseMethods()
+        .getUserByUserName(searchUserNameEditingController.text);
+    setState(() {});
+  }
+
+  Widget searchFieldUserTile({String profileUrl, name, username, email}) {
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => ChatScreen(
+                      username,
+                      name,
+                    )));
+      },
+      child: Row(
+        children: [
+          ClipRRect(
+            borderRadius: BorderRadius.circular(30),
+            child: Image.network(
+              profileUrl,
+              height: 40,
+              width: 40,
+            ),
+          ),
+          SizedBox(width: 12),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(name),
+              Text(email),
+            ],
+          )
+        ],
+      ),
+    );
+  }
+
+  Widget searchUserList() {
+    return StreamBuilder(
+      stream: userStream,
+      builder: (context, snapshot) {
+        return snapshot.hasData
+            ? ListView.builder(
+                itemCount: snapshot.data.docs.length,
+                shrinkWrap: true,
+                itemBuilder: (context, index) {
+                  DocumentSnapshot ds = snapshot.data.docs[index];
+                  return searchFieldUserTile(
+                    profileUrl: ds["imgUrl"],
+                    name: ds["name"],
+                    email: ds["email"],
+                    username: ds["username"],
+                  );
+                },
+              )
+            : Center(
+                child: CircularProgressIndicator(),
+              );
+      },
+    );
+  }
+
+  Widget chatRoomsList() {
+    return Container();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,6 +107,63 @@ class _HomeState extends State<Home> {
             ),
           )
         ],
+      ),
+      body: Container(
+        margin: EdgeInsets.symmetric(horizontal: 20),
+        child: Column(
+          children: [
+            Row(
+              children: [
+                isSearching
+                    ? GestureDetector(
+                        onTap: () {
+                          isSearching = false;
+                          searchUserNameEditingController.text = "";
+                          setState(() {});
+                        },
+                        child: Padding(
+                            padding: EdgeInsets.only(right: 12),
+                            child: Icon(Icons.arrow_back)),
+                      )
+                    : Container(),
+                Expanded(
+                  child: Container(
+                    margin: EdgeInsets.symmetric(vertical: 16),
+                    padding: EdgeInsets.symmetric(horizontal: 16),
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color: Colors.grey,
+                        width: 1.0,
+                        style: BorderStyle.solid,
+                      ),
+                      borderRadius: BorderRadius.circular(24),
+                    ),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: TextField(
+                            controller: searchUserNameEditingController,
+                            decoration: InputDecoration(
+                                border: InputBorder.none, hintText: "UserName"),
+                          ),
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            if (searchUserNameEditingController.text != "") {
+                              onSearchButtonClick();
+                            }
+                          },
+                          child: Icon(Icons.search),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            isSearching ? searchUserList() : chatRoomsList(),
+          ],
+        ),
       ),
     );
   }
