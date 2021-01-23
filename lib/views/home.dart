@@ -148,7 +148,8 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Messenger Clone"),
+        backgroundColor: Colors.black26,
+        title: Text("Signal"),
         actions: [
           InkWell(
             onTap: () {
@@ -164,6 +165,8 @@ class _HomeState extends State<Home> {
           )
         ],
       ),
+      // App Background Color
+      backgroundColor: Colors.black,
       body: Container(
         margin: EdgeInsets.symmetric(horizontal: 20),
         child: Column(
@@ -183,12 +186,13 @@ class _HomeState extends State<Home> {
                       )
                     : Container(),
                 Expanded(
+                  // search Title Edit
                   child: Container(
                     margin: EdgeInsets.symmetric(vertical: 16),
                     padding: EdgeInsets.symmetric(horizontal: 16),
                     decoration: BoxDecoration(
                       border: Border.all(
-                        color: Colors.grey,
+                        color: Colors.amber,
                         width: 1.0,
                         style: BorderStyle.solid,
                       ),
@@ -198,9 +202,14 @@ class _HomeState extends State<Home> {
                       children: [
                         Expanded(
                           child: TextField(
+                            style: TextStyle(color: Colors.white),
                             controller: searchUserNameEditingController,
                             decoration: InputDecoration(
-                                border: InputBorder.none, hintText: "UserName"),
+                              border: InputBorder.none,
+                              hintText: "UserName",
+                              hintStyle: TextStyle(
+                                  color: Colors.amber.withOpacity(0.5)),
+                            ),
                           ),
                         ),
                         GestureDetector(
@@ -266,6 +275,7 @@ class _ChatRoomListTileState extends State<ChatRoomListTile> {
                     )));
       },
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.baseline,
         children: [
           ClipRRect(
             borderRadius: BorderRadius.circular(30),
@@ -279,14 +289,22 @@ class _ChatRoomListTileState extends State<ChatRoomListTile> {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                name,
-                style: TextStyle(fontSize: 16),
-              ),
+              Text(name,
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: Colors.white,
+                  )),
               SizedBox(height: 3),
-              Text(widget.lastMessage),
+              Text(
+                widget.lastMessage,
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.white,
+                ),
+              ),
+              SizedBox(height: 30),
             ],
-          )
+          ),
         ],
       ),
     );

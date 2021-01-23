@@ -80,6 +80,11 @@ class _ChatScreenState extends State<ChatScreen> {
           sendByMe ? MainAxisAlignment.end : MainAxisAlignment.start,
       children: [
         Container(
+          constraints: BoxConstraints(
+            maxHeight: MediaQuery.of(context).size.height,
+            maxWidth: MediaQuery.of(context).size.width * 0.6,
+          ),
+          // width: MediaQuery.of(context).size.w,
           margin: EdgeInsets.symmetric(horizontal: 16, vertical: 4),
           padding: EdgeInsets.all(16),
           decoration: BoxDecoration(
@@ -89,7 +94,7 @@ class _ChatScreenState extends State<ChatScreen> {
               topRight: Radius.circular(24),
               bottomLeft: sendByMe ? Radius.circular(24) : Radius.circular(0),
             ),
-            color: Colors.blue,
+            color: sendByMe ? Colors.blue : Colors.red,
           ),
           child: Text(
             message,
@@ -140,46 +145,94 @@ class _ChatScreenState extends State<ChatScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.redAccent,
         title: Text(widget.name),
       ),
-
+      backgroundColor: Colors.black,
       // message BOX
       body: Container(
         child: Stack(
           children: [
             chatMessages(),
             Container(
-              alignment: Alignment.bottomCenter,
-              child: Container(
-                color: Colors.amber.withOpacity(0.9),
-                padding: EdgeInsets.symmetric(horizontal: 16, vertical: 6),
-                child: Row(
-                  children: [
-                    Expanded(
-                        child: TextField(
-                      controller: messageTextEditingController,
-                      onChanged: (value) {
-                        addMessage(false);
-                      },
-                      decoration: InputDecoration(
-                        hintText: "type a message",
-                        hintStyle: TextStyle(
-                            fontWeight: FontWeight.w500,
-                            color: Colors.black.withOpacity(0.5)),
-                        border: InputBorder.none,
+              // alignment: Alignment.bottomCenter,
+              alignment: Alignment.bottomLeft,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Container(
+                    constraints: BoxConstraints(
+                      maxHeight: MediaQuery.of(context).size.height * .9,
+                      maxWidth: MediaQuery.of(context).size.width * .8,
+                    ),
+                    margin: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                    padding: EdgeInsets.only(left: 8.0, right: 4.0),
+                    decoration: BoxDecoration(
+                      color: Colors.black.withOpacity(0.7),
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(15),
+                        bottomLeft: Radius.circular(15),
+                        topRight: Radius.circular(15),
+                        bottomRight: Radius.circular(15),
                       ),
-                    )),
+                      border: Border.all(
+                        color: Colors.orange,
+                        width: 1.5,
+                        style: BorderStyle.solid,
+                      ),
+                    ),
 
-                    //send Button
-                    GestureDetector(
-                        onTap: () {
-                          addMessage(true);
-                        },
-                        child: Icon(Icons.send)),
-                  ],
-                ),
+                    // TextInput Field
+                    child: Row(
+                      children: [
+                        Expanded(
+                            child: TextField(
+                          // maxLength: 1000,
+                          minLines: 1,
+                          maxLines: 4,
+                          style: TextStyle(color: Colors.white),
+                          controller: messageTextEditingController,
+                          onChanged: (value) {
+                            addMessage(false);
+                          },
+                          decoration: InputDecoration(
+                            hintText: "type a message",
+                            hintStyle: TextStyle(
+                                fontWeight: FontWeight.w500,
+                                color: Colors.white.withOpacity(0.5)),
+                            border: InputBorder.none,
+                          ),
+                        )),
+                      ],
+                    ),
+                  ),
+                  GestureDetector(
+                      onTap: () {
+                        addMessage(true);
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                          // border: Border.all(
+                          //   color: Colors.amber,
+                          //   width: 1.0,
+                          //   style: BorderStyle.solid,
+                          // ),
+                          // color: Colors.blue,
+                          borderRadius: BorderRadius.circular(30),
+                          // color: Colors.black.withOpacity(0.7),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(5.0),
+                          child: Icon(
+                            Icons.send,
+                            color: Colors.red,
+                            size: 40,
+                          ),
+                        ),
+                      )),
+                ],
               ),
-            )
+            ),
           ],
         ),
       ),
