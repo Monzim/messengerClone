@@ -94,8 +94,18 @@ class _ChatScreenState extends State<ChatScreen> {
               topRight: Radius.circular(24),
               bottomLeft: sendByMe ? Radius.circular(24) : Radius.circular(0),
             ),
-            color: sendByMe ? Colors.blue : Colors.red,
+            color: sendByMe
+                ? Colors.black.withOpacity(0.7)
+                : Colors.black.withOpacity(0.7),
+
+            //border for Chats
+            border: Border.all(
+              color: sendByMe ? Colors.blue : Colors.red,
+              width: 1.0,
+              style: BorderStyle.solid,
+            ),
           ),
+
           child: Text(
             message,
             style: TextStyle(
@@ -168,6 +178,7 @@ class _ChatScreenState extends State<ChatScreen> {
                     margin: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                     padding: EdgeInsets.only(left: 8.0, right: 4.0),
                     decoration: BoxDecoration(
+                      //color
                       color: Colors.black.withOpacity(0.7),
                       borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(15),
