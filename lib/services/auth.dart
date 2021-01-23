@@ -11,6 +11,7 @@ class AuthMethods {
   final FirebaseAuth auth = FirebaseAuth.instance;
 
   getCurrentUser() async {
+    // ignore: await_only_futures
     return await auth.currentUser;
   }
 

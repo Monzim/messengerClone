@@ -94,8 +94,14 @@ class _HomeState extends State<Home> {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(name),
-              Text(email),
+              Text(
+                name,
+                style: TextStyle(color: Colors.white),
+              ),
+              Text(
+                email,
+                style: TextStyle(color: Colors.white),
+              ),
             ],
           )
         ],
@@ -148,7 +154,9 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.black26,
+        // backgroundColor: Colors.black26,
+        backgroundColor: Colors.greenAccent[800],
+
         title: Text("Signal"),
         actions: [
           InkWell(
@@ -182,7 +190,10 @@ class _HomeState extends State<Home> {
                         },
                         child: Padding(
                             padding: EdgeInsets.only(right: 12),
-                            child: Icon(Icons.arrow_back)),
+                            child: Icon(
+                              Icons.arrow_back,
+                              color: Colors.white,
+                            )),
                       )
                     : Container(),
                 Expanded(
@@ -191,24 +202,25 @@ class _HomeState extends State<Home> {
                     margin: EdgeInsets.symmetric(vertical: 16),
                     padding: EdgeInsets.symmetric(horizontal: 16),
                     decoration: BoxDecoration(
+                      color: Colors.white,
                       border: Border.all(
-                        color: Colors.amber,
+                        // color: Colors.amber,
                         width: 1.0,
                         style: BorderStyle.solid,
                       ),
-                      borderRadius: BorderRadius.circular(24),
+                      borderRadius: BorderRadius.circular(30),
                     ),
                     child: Row(
                       children: [
                         Expanded(
                           child: TextField(
-                            style: TextStyle(color: Colors.white),
+                            style: TextStyle(color: Colors.black),
                             controller: searchUserNameEditingController,
                             decoration: InputDecoration(
                               border: InputBorder.none,
-                              hintText: "UserName",
+                              hintText: "search here",
                               hintStyle: TextStyle(
-                                  color: Colors.amber.withOpacity(0.5)),
+                                  color: Colors.black.withOpacity(0.5)),
                             ),
                           ),
                         ),
@@ -300,6 +312,7 @@ class _ChatRoomListTileState extends State<ChatRoomListTile> {
                 style: TextStyle(
                   fontSize: 16,
                   color: Colors.white,
+                  fontWeight: FontWeight.w500,
                 ),
               ),
               SizedBox(height: 30),
