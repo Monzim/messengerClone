@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:msg_clone/helperFunctions/sharedpre_helper.dart';
 
 class DatabaseMethods {
   Future addUserInfoToDB(
@@ -49,5 +50,30 @@ class DatabaseMethods {
           .doc(chatRoomId)
           .set(chatRoomInfoMap);
     }
+  }
+
+  Future<Stream<QuerySnapshot>> getChatRoomMessages(chatRoomId) async {
+    return FirebaseFirestore.instance
+        .collection("chatRooms")
+        .doc(chatRoomId)
+        .collection("chats")
+        .orderBy("ts", descending: true)
+        .snapshots();
+  }
+
+  Future<Stream<QuerySnapshot>> getChatRooms() async {
+    String myUsername = await SharedPreferenceHelper().getUserName();
+    return FirebaseFirestore.instance
+        .collection("chatRooms")
+        .orderBy("lastSendTs", descending: true)
+        .where("users", arrayContains: myUsername)
+        .snapshots();
+  }
+
+  Future<QuerySnapshot> getUserInfo(String username) async {
+    return await FirebaseFirestore.instance
+        .collection("users")
+        .where("username", isEqualTo: username)
+        .get();
   }
 }

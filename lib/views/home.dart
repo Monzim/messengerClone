@@ -13,7 +13,7 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   bool isSearching = false;
-  Stream userStream;
+  Stream userStream, chatRoomsStream;
   String myName, myProfilePic, myUserName, myEmail;
 
   TextEditingController searchUserNameEditingController =
@@ -41,6 +41,23 @@ class _HomeState extends State<Home> {
     userStream = await DatabaseMethods()
         .getUserByUserName(searchUserNameEditingController.text);
     setState(() {});
+  }
+
+  Widget chatRoomsList() {
+    return StreamBuilder(
+      stream: chatRoomsStream,
+      builder: (context, snapshot) {
+        return snapshot.hasData
+            ? ListView.builder(
+                itemCount: snapshot.data.docs.length,
+                shrinkWrap: true,
+                itemBuilder: (context, index) {
+                  DocumentSnapshot ds = snapshot.data.docs[index];
+                  return ChatRoomListTile(ds.id, ds["lastMessage"], myUserName);
+                })
+            : Center(child: CircularProgressIndicator());
+      },
+    );
   }
 
   Widget searchFieldUserTile({String profileUrl, name, username, email}) {
@@ -111,13 +128,19 @@ class _HomeState extends State<Home> {
     );
   }
 
-  Widget chatRoomsList() {
-    return Container();
+  getChatRooms() async {
+    chatRoomsStream = await DatabaseMethods().getChatRooms();
+    setState(() {});
+  }
+
+  onScreenLoaded() async {
+    await getMyInfoFromSharedPreferences();
+    getChatRooms();
   }
 
   @override
   void initState() {
-    getMyInfoFromSharedPreferences();
+    onScreenLoaded();
     super.initState();
   }
 
@@ -197,6 +220,74 @@ class _HomeState extends State<Home> {
             isSearching ? searchUserList() : chatRoomsList(),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class ChatRoomListTile extends StatefulWidget {
+  final String chatRoomId, lastMessage, myUserName;
+  ChatRoomListTile(this.chatRoomId, this.lastMessage, this.myUserName);
+
+  @override
+  _ChatRoomListTileState createState() => _ChatRoomListTileState();
+}
+
+class _ChatRoomListTileState extends State<ChatRoomListTile> {
+  String profilePicUrl = "", name = "", username = "";
+
+  getThisUserInfo() async {
+    username =
+        widget.chatRoomId.replaceAll(widget.myUserName, "").replaceAll("_", "");
+    QuerySnapshot querySnapshot = await DatabaseMethods().getUserInfo(username);
+    print("something the data we are getting ${querySnapshot.docs[0].id}");
+    name = "${querySnapshot.docs[0]["name"]}";
+    profilePicUrl = querySnapshot.docs[0]["imgUrl"];
+    setState(() {});
+  }
+
+  @override
+  void initState() {
+    getThisUserInfo();
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        //before going to charRoom
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => ChatScreen(
+                      username,
+                      name,
+                    )));
+      },
+      child: Row(
+        children: [
+          ClipRRect(
+            borderRadius: BorderRadius.circular(30),
+            child: Image.network(
+              profilePicUrl,
+              height: 40,
+              width: 40,
+            ),
+          ),
+          SizedBox(width: 12),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                name,
+                style: TextStyle(fontSize: 16),
+              ),
+              SizedBox(height: 3),
+              Text(widget.lastMessage),
+            ],
+          )
+        ],
       ),
     );
   }
