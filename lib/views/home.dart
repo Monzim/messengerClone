@@ -5,6 +5,7 @@ import 'package:msg_clone/services/auth.dart';
 import 'package:msg_clone/services/database.dart';
 import 'package:msg_clone/views/chatscreen.dart';
 import 'package:msg_clone/views/signin.dart';
+import 'package:msg_clone/widget/drawerMenue.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -173,6 +174,7 @@ class _HomeState extends State<Home> {
           )
         ],
       ),
+      drawer: AppDraW(),
       // App Background Color
       backgroundColor: Colors.black,
       body: Container(

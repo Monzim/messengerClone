@@ -106,11 +106,13 @@ class _ChatScreenState extends State<ChatScreen> {
             ),
           ),
 
-          child: Text(
+          child: SelectableText(
             message,
             style: TextStyle(
               color: Colors.white,
+              fontSize: 15,
             ),
+            // onTap: () {},
           ),
         ),
       ],
