@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:hexcolor/hexcolor.dart';
 import 'package:msg_clone/helperFunctions/sharedpre_helper.dart';
 import 'package:msg_clone/services/auth.dart';
 import 'package:msg_clone/services/database.dart';
@@ -155,8 +156,9 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        // backgroundColor: Colors.black26,
-        backgroundColor: Colors.greenAccent[800],
+        elevation: 2.0,
+        // backgroundColor: Colors.black26, #6EB2F1FF #88CCF0 #506AD4
+        backgroundColor: HexColor("#506AD4"),
 
         title: Text("Signal"),
         actions: [
@@ -176,7 +178,7 @@ class _HomeState extends State<Home> {
       ),
       drawer: AppDraW(),
       // App Background Color
-      backgroundColor: Colors.black,
+      backgroundColor: HexColor("#0D0D0D"),
       body: Container(
         margin: EdgeInsets.symmetric(horizontal: 20),
         child: Column(
@@ -313,7 +315,7 @@ class _ChatRoomListTileState extends State<ChatRoomListTile> {
                 widget.lastMessage,
                 style: TextStyle(
                   fontSize: 16,
-                  color: Colors.white,
+                  color: HexColor("#E6F4F7"),
                   fontWeight: FontWeight.w500,
                 ),
               ),

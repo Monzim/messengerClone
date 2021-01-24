@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:hexcolor/hexcolor.dart';
 import 'package:msg_clone/helperFunctions/sharedpre_helper.dart';
 import 'package:msg_clone/services/database.dart';
 import 'package:random_string/random_string.dart';
@@ -110,7 +111,7 @@ class _ChatScreenState extends State<ChatScreen> {
             message,
             style: TextStyle(
               color: Colors.white,
-              fontSize: 15,
+              fontSize: 16.5,
             ),
             // onTap: () {},
           ),
@@ -219,30 +220,21 @@ class _ChatScreenState extends State<ChatScreen> {
                       ],
                     ),
                   ),
-                  GestureDetector(
-                      onTap: () {
-                        addMessage(true);
-                      },
-                      child: Container(
-                        decoration: BoxDecoration(
-                          // border: Border.all(
-                          //   color: Colors.amber,
-                          //   width: 1.0,
-                          //   style: BorderStyle.solid,
-                          // ),
-                          // color: Colors.blue,
-                          borderRadius: BorderRadius.circular(30),
-                          // color: Colors.black.withOpacity(0.7),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(5.0),
-                          child: Icon(
-                            Icons.send,
-                            color: Colors.red,
-                            size: 40,
-                          ),
-                        ),
-                      )),
+                  FloatingActionButton(
+                    onPressed: () {
+                      addMessage(true);
+                    },
+                    backgroundColor: Colors.black,
+                    splashColor: HexColor("#B26157"),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Icon(
+                        Icons.send,
+                        color: Colors.red,
+                        size: 40,
+                      ),
+                    ),
+                  )
                 ],
               ),
             ),
