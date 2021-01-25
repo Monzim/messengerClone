@@ -111,7 +111,7 @@ class _ChatScreenState extends State<ChatScreen> {
             message,
             style: TextStyle(
               color: Colors.white,
-              fontSize: 16.5,
+              // fontSize: 16.5,
             ),
             // onTap: () {},
           ),

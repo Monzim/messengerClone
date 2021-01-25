@@ -61,8 +61,7 @@ class _LoginPageState extends State<LoginPage> {
             onTap: () {
               showDialog(
                   context: context,
-                  builder: (BuildContext context) =>
-                      _buildAboutDialog(context));
+                  builder: (BuildContext context) => buildAboutDialog(context));
             },
             child: Text(
               'here',
@@ -160,7 +159,7 @@ class _LoginPageState extends State<LoginPage> {
   }
 }
 
-Widget _buildAboutDialog(BuildContext context) {
+Widget buildAboutDialog(BuildContext context) {
   return new AlertDialog(
     title: const Text('Privacy Policy'),
     content: new Column(

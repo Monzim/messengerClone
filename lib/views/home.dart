@@ -6,7 +6,9 @@ import 'package:msg_clone/services/auth.dart';
 import 'package:msg_clone/services/database.dart';
 import 'package:msg_clone/views/chatscreen.dart';
 import 'package:msg_clone/views/signin.dart';
-import 'package:msg_clone/widget/drawerMenue.dart';
+import 'package:msg_clone/widget/drawesettingPage.dart';
+import 'package:msg_clone/widget/infoPage.dart';
+import 'package:msg_clone/widget/widgetsCollention.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -155,28 +157,110 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        elevation: 2.0,
-        // backgroundColor: Colors.black26, #6EB2F1FF #88CCF0 #506AD4
-        backgroundColor: HexColor("#506AD4"),
-
-        title: Text("Signal"),
-        actions: [
-          InkWell(
-            onTap: () {
-              AuthMethods().signOut().then((s) {
-                Navigator.pushReplacement(
-                    context, MaterialPageRoute(builder: (context) => SignIn()));
-              });
-            },
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(60.0),
+        child: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
             child: Container(
-              padding: EdgeInsets.symmetric(horizontal: 16),
-              child: Icon(Icons.exit_to_app),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  IconButton(
+                      icon: Icon(
+                        Icons.short_text,
+                        color: Colors.white,
+                        size: 30.0,
+                      ),
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => settingPage(
+                                    context, myName, myProfilePic, myEmail)));
+                      }),
+                  ClipRRect(
+                      borderRadius: BorderRadius.circular(30),
+                      child: Image(
+                          height: 80.0, image: NetworkImage(myProfilePic))),
+                ],
+              ),
             ),
-          )
-        ],
+          ),
+        ),
       ),
-      drawer: AppDraW(),
+      // appBar: AppBar(
+      //   elevation: 2.0,
+      //   // backgroundColor: Colors.black26, #6EB2F1FF #88CCF0 #506AD4
+      //   backgroundColor: HexColor("#506AD4"),
+      //   leading: ClipRRect(
+      //     borderRadius: BorderRadius.circular(30),
+      //     child: Image.network(
+      //       myProfilePic,
+      //     ),
+      //   ),
+      //   leadingWidth: 30,
+
+      //   title: Text("Signal"),
+      //   actions: [
+      //     InkWell(
+      //       onTap: () {
+      //         AuthMethods().signOut().then((s) {
+      //           Navigator.pushReplacement(
+      //               context, MaterialPageRoute(builder: (context) => SignIn()));
+      //         });
+      //       },
+      //       child: Container(
+      //         padding: EdgeInsets.symmetric(horizontal: 16),
+      //         child: Icon(Icons.exit_to_app),
+      //       ),
+      //     )
+      //   ],
+      // ),
+
+      // drawer: Drawer(
+      //   child: new ListView(
+      //     children: <Widget>[
+      //       new UserAccountsDrawerHeader(
+      //         accountName: new Text(
+      //           myName,
+      //           style: TextStyle(color: Colors.black),
+      //         ),
+      //         accountEmail: new Text(
+      //           myEmail,
+      //           style: TextStyle(color: Colors.black),
+      //         ),
+      //         currentAccountPicture: CircleAvatar(
+      //           backgroundImage: NetworkImage(myProfilePic),
+      //         ),
+      //       ),
+      //       new ListTile(
+      //           leading: Icon(Icons.settings),
+      //           title: new Text("Settings"),
+      //           onTap: () {}),
+      //       new Divider(),
+      //       new ListTile(
+      //           leading: Icon(Icons.info),
+      //           title: new Text("About"),
+      //           onTap: () {
+      //             showDialog(
+      //                 context: context,
+      //                 builder: (BuildContext context) =>
+      //                     buildAboutDialog(context));
+      //           }),
+      //       new ListTile(
+      //           leading: Icon(Icons.power_settings_new),
+      //           title: new Text("Logout"),
+      //           onTap: () {
+      //             AuthMethods().signOut().then((s) {
+      //               Navigator.pushReplacement(context,
+      //                   MaterialPageRoute(builder: (context) => SignIn()));
+      //             });
+      //           }),
+      //     ],
+      //   ),
+      // // ),
+
       // App Background Color
       backgroundColor: HexColor("#0D0D0D"),
       body: Container(
@@ -326,4 +410,32 @@ class _ChatRoomListTileState extends State<ChatRoomListTile> {
       ),
     );
   }
+}
+
+AllIKnow(profileUrl) {
+  return PreferredSize(
+    preferredSize: Size.fromHeight(60.0),
+    child: SafeArea(
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Container(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              IconButton(
+                  icon: Icon(
+                    Icons.short_text,
+                    color: Colors.white,
+                    size: 30.0,
+                  ),
+                  onPressed: () {}),
+              ClipRRect(
+                  borderRadius: BorderRadius.circular(30),
+                  child: Image(height: 80.0, image: NetworkImage(profileUrl))),
+            ],
+          ),
+        ),
+      ),
+    ),
+  );
 }
