@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hexcolor/hexcolor.dart';
 import 'package:msg_clone/services/auth.dart';
 import 'package:msg_clone/views/signin.dart';
 import 'package:msg_clone/widget/bezierContainer.dart';
@@ -6,7 +7,7 @@ import 'package:msg_clone/widget/infoPage.dart';
 
 Widget settingPage(context, myName, muUrl, myEmail) {
   return Scaffold(
-    backgroundColor: Colors.white,
+    backgroundColor: HexColor("#D4DBF5"),
     body: Stack(
       children: [
         // Positioned(
@@ -24,130 +25,107 @@ Widget settingPage(context, myName, muUrl, myEmail) {
         Positioned(
           left: MediaQuery.of(context).size.width * .05,
           top: MediaQuery.of(context).size.height * .06,
-          child: Container(
-            width: 40,
-            height: 40,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: Colors.amber,
-            ),
-            child: IconButton(
-              icon: Icon(Icons.arrow_back),
-              onPressed: () {
-                Navigator.pop(context);
-              },
-            ),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Container(
+                width: 40,
+                height: 40,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                ),
+                child: IconButton(
+                  icon: Icon(Icons.arrow_back),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                ),
+              ),
+              SizedBox(width: 10),
+              AppNameTitle(context, 30.0),
+            ],
           ),
         ),
+
         Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              SizedBox(height: 60),
+              SizedBox(height: 130),
               ClipRRect(
-                borderRadius: BorderRadius.circular(200),
+                borderRadius: BorderRadius.circular(30),
                 child: Image.network(
                   muUrl,
-                  width: 60,
-                  height: 60,
                 ),
               ),
-              Text(
-                myName,
-                style: TextStyle(
-                  fontSize: 26,
-                ),
-              ),
-              Text(
-                myEmail,
-                style: TextStyle(
-                  fontSize: 26,
-                ),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SizedBox(height: 20),
+                  Column(
+                    children: [
+                      RichTextFor(context, myName, 36.0, FontWeight.bold),
+                      RichTextFor(context, myEmail, 20.0, FontWeight.normal),
+                    ],
+                  ),
+                ],
               ),
               SizedBox(height: 20),
-              Container(
-                height: 40,
-                width: 200,
-                child: RaisedButton(
-                  color: Colors.pink[300],
+              ElevatedButton.icon(
+                icon: Icon(Icons.help),
+                label: Text("Help"),
+                onPressed: () {},
+                style: ElevatedButton.styleFrom(
+                  primary: HexColor("#0C4879"),
+                  onPrimary: Colors.white,
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(22.0),
-                  ),
-                  onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => InfoAboutAppPage()));
-                  },
-                  child: Row(
-                    children: [
-                      Icon(
-                        Icons.developer_mode,
-                        size: 30,
-                      ),
-                      SizedBox(width: 5),
-                      Text(
-                        'Developer Info',
-                        style: TextStyle(fontSize: 18),
-                      ),
-                    ],
+                    borderRadius: BorderRadius.circular(32.0),
                   ),
                 ),
               ),
-              SizedBox(height: 30),
-              Container(
-                height: 40,
-                width: 200,
-                child: RaisedButton(
-                  color: Colors.pink[300],
+              ElevatedButton.icon(
+                icon: Icon(Icons.developer_mode),
+                label: Text("Developer Info"),
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => InfoAboutAppPage()));
+                },
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.black,
+                  onPrimary: Colors.white,
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(22.0),
-                  ),
-                  onPressed: () {
-                    AuthMethods().signOut().then((s) {
-                      Navigator.pushReplacement(context,
-                          MaterialPageRoute(builder: (context) => SignIn()));
-                    });
-                  },
-                  child: Row(
-                    children: [
-                      SizedBox(width: 35),
-                      Text(
-                        'LOG OUT',
-                        style: TextStyle(fontSize: 18),
-                      ),
-                      SizedBox(width: 5),
-                      Icon(
-                        Icons.logout,
-                        size: 30,
-                      ),
-                    ],
+                    borderRadius: BorderRadius.circular(32.0),
                   ),
                 ),
               ),
-              SizedBox(height: 20),
-              Container(
-                height: 40,
-                width: 120,
-                child: RaisedButton(
-                  color: Colors.pink[300],
+              ElevatedButton.icon(
+                icon: Icon(Icons.info),
+                label: Text("About"),
+                onPressed: () {},
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.blue,
+                  onPrimary: Colors.white,
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(22.0),
+                    borderRadius: BorderRadius.circular(32.0),
                   ),
-                  onPressed: () {},
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(
-                        Icons.info,
-                        size: 30,
-                      ),
-                      SizedBox(width: 5),
-                      Text(
-                        'About',
-                        style: TextStyle(fontSize: 18),
-                      ),
-                    ],
+                ),
+              ),
+              ElevatedButton.icon(
+                icon: Icon(Icons.logout),
+                label: Text("LOG OUT"),
+                onPressed: () {
+                  AuthMethods().signOut().then((s) {
+                    Navigator.pushReplacement(context,
+                        MaterialPageRoute(builder: (context) => SignIn()));
+                  });
+                },
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.red,
+                  onPrimary: Colors.white,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(32.0),
                   ),
                 ),
               ),
