@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:msg_clone/services/auth.dart';
 import 'package:msg_clone/views/signin.dart';
+import 'package:msg_clone/widget/aboutPage.dart';
 import 'package:msg_clone/widget/bezierContainer.dart';
 import 'package:msg_clone/widget/infoPage.dart';
+import 'package:msg_clone/widget/widgetsCollention.dart';
 
 Widget settingPage(context, myName, muUrl, myEmail) {
   return Scaffold(
@@ -42,7 +44,7 @@ Widget settingPage(context, myName, muUrl, myEmail) {
                 ),
               ),
               SizedBox(width: 10),
-              AppNameTitle(context, 30.0),
+              AppNameTitle(context, 30.0, Color(0xffe46b10), Colors.black),
             ],
           ),
         ),
@@ -103,7 +105,11 @@ Widget settingPage(context, myName, muUrl, myEmail) {
               ElevatedButton.icon(
                 icon: Icon(Icons.info),
                 label: Text("About"),
-                onPressed: () {},
+                onPressed: () {
+                  showDialog(
+                      context: context,
+                      builder: (BuildContext context) => AboutPage());
+                },
                 style: ElevatedButton.styleFrom(
                   primary: Colors.blue,
                   onPrimary: Colors.white,

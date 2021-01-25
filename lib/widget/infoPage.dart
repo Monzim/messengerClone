@@ -173,7 +173,7 @@ RichTextFor(context, textName, fontsize, fontWeight) {
   );
 }
 
-AppNameTitle(context, mainFontsize) {
+AppNameTitle(context, mainFontsize, color1, color2) {
   return RichText(
       textAlign: TextAlign.center,
       text: TextSpan(
@@ -182,17 +182,16 @@ AppNameTitle(context, mainFontsize) {
             textStyle: Theme.of(context).textTheme.display1,
             fontSize: mainFontsize,
             fontWeight: FontWeight.w700,
-            color: Color(0xffe46b10),
+            color: color1,
           ),
           children: [
             TextSpan(
               text: 'Ch',
-              style: TextStyle(color: Colors.black, fontSize: mainFontsize - 5),
+              style: TextStyle(color: color2, fontSize: mainFontsize - 5),
             ),
             TextSpan(
               text: 'ats',
-              style: TextStyle(
-                  color: Color(0xffe46b10), fontSize: mainFontsize - 5),
+              style: TextStyle(color: color1, fontSize: mainFontsize - 5),
             ),
           ]));
 }
