@@ -325,12 +325,26 @@ class _ChatRoomListTileState extends State<ChatRoomListTile> {
                     color: Colors.white,
                   )),
               SizedBox(height: 3),
-              Text(
-                widget.lastMessage,
-                style: TextStyle(
-                  fontSize: 16,
-                  color: HexColor("#E6F4F7"),
-                  fontWeight: FontWeight.w500,
+
+              // Text(
+              //   widget.lastMessage,
+              //   overflow: TextOverflow.ellipsis,
+              //   style: TextStyle(
+              //     fontSize: 16,
+              //     color: HexColor("#E6F4F7"),
+              //     fontWeight: FontWeight.w500,
+              //   ),
+              // ),
+              Container(
+                width: 200,
+                child: Text(
+                  widget.lastMessage,
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: HexColor("#E6F4F7"),
+                  ),
+                  overflow: TextOverflow.visible,
+                  softWrap: false,
                 ),
               ),
               SizedBox(height: 30),
