@@ -55,14 +55,31 @@ class InfoAboutAppPage extends StatelessWidget {
                   SizedBox(height: 15),
 
                   Container(
-                      width: 200.0,
-                      height: 200.0,
-                      decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          image: DecorationImage(
-                              fit: BoxFit.fill,
-                              image: NetworkImage(
-                                  "https://pbs.twimg.com/profile_images/1349722974677467139/Sm4DrmsI_400x400.jpg")))),
+                    width: 200.0,
+                    height: 200.0,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                    ),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(50),
+                      child: Image.network(
+                        "https://pbs.twimg.com/profile_images/1349722974677467139/Sm4DrmsI_400x400.jpg",
+                        fit: BoxFit.fill,
+                        loadingBuilder: (BuildContext context, Widget child,
+                            ImageChunkEvent loadingProgress) {
+                          if (loadingProgress == null) return child;
+                          return Center(
+                            child: CircularProgressIndicator(
+                              value: loadingProgress.expectedTotalBytes != null
+                                  ? loadingProgress.cumulativeBytesLoaded /
+                                      loadingProgress.expectedTotalBytes
+                                  : null,
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                  ),
                   SizedBox(height: 20),
                   RichTextFor(
                       context, "Azraf Al Monzim", 35.0, FontWeight.w800),

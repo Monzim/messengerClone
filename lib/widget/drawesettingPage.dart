@@ -1,3 +1,4 @@
+import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:msg_clone/services/auth.dart';
@@ -6,6 +7,7 @@ import 'package:msg_clone/widget/aboutPage.dart';
 import 'package:msg_clone/widget/bezierContainer.dart';
 import 'package:msg_clone/widget/infoPage.dart';
 import 'package:msg_clone/widget/widgetsCollention.dart';
+import 'package:page_transition/page_transition.dart';
 
 Widget settingPage(context, myName, muUrl, myEmail) {
   return Scaffold(
@@ -90,9 +92,17 @@ Widget settingPage(context, myName, muUrl, myEmail) {
                 label: Text("Developer Info"),
                 onPressed: () {
                   Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => InfoAboutAppPage()));
+                    context,
+                    PageTransition(
+                        type: PageTransitionType.rightToLeft,
+                        child: InfoAboutAppPage(),
+                        inheritTheme: true,
+                        ctx: context),
+                  );
+                  // Navigator.push(
+                  //   context,
+                  //   MaterialPageRoute(builder: (context) => InfoAboutAppPage()),
+                  // );
                 },
                 style: ElevatedButton.styleFrom(
                   primary: Colors.black,
@@ -122,10 +132,21 @@ Widget settingPage(context, myName, muUrl, myEmail) {
                 icon: Icon(Icons.logout),
                 label: Text("LOG OUT"),
                 onPressed: () {
-                  AuthMethods().signOut().then((s) {
-                    Navigator.pushReplacement(context,
-                        MaterialPageRoute(builder: (context) => SignIn()));
-                  });
+                  // AuthMethods().signOut().then((s) {
+                  //   Navigator.pushReplacement(context,
+                  //       MaterialPageRoute(builder: (context) => SignIn()));
+                  // });
+                  print("AuthMethods SIGN OUT");
+
+                  AuthMethods().signOut();
+                  Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(
+                      builder: (BuildContext context) => SignIn(),
+                    ),
+                    (route) => false,
+                  );
+                  print("GET OUT FROM HERE");
                 },
                 style: ElevatedButton.styleFrom(
                   primary: Colors.red,

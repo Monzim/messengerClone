@@ -8,7 +8,7 @@ import 'package:msg_clone/views/chatscreen.dart';
 import 'package:msg_clone/views/signin.dart';
 import 'package:msg_clone/widget/drawesettingPage.dart';
 import 'package:msg_clone/widget/infoPage.dart';
-import 'package:msg_clone/widget/widgetsCollention.dart';
+import 'package:page_transition/page_transition.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -256,7 +256,9 @@ class _HomeState extends State<Home> {
                 ),
               ],
             ),
-            isSearching ? searchUserList() : chatRoomsList(),
+            isSearching
+                ? Expanded(child: searchUserList())
+                : Expanded(child: chatRoomsList()),
           ],
         ),
       ),
@@ -296,13 +298,22 @@ class _ChatRoomListTileState extends State<ChatRoomListTile> {
     return GestureDetector(
       onTap: () {
         //before going to charRoom
+        // Navigator.push(
+        //     context,
+        //     MaterialPageRoute(
+        //       builder: (context) => ChatScreen(
+        //         username,
+        //         name,
+        //       ),
+        //     ));
+
         Navigator.push(
             context,
-            MaterialPageRoute(
-                builder: (context) => ChatScreen(
-                      username,
-                      name,
-                    )));
+            PageTransition(
+              type: PageTransitionType.scale,
+              alignment: Alignment.center,
+              child: ChatScreen(username, name),
+            ));
       },
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.baseline,
