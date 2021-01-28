@@ -1,26 +1,19 @@
-import 'package:animated_text_kit/animated_text_kit.dart';
-import 'package:clay_containers/clay_containers.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:msg_clone/services/auth.dart';
+import 'package:msg_clone/views/helpPage.dart';
 import 'package:msg_clone/views/signin.dart';
 import 'package:msg_clone/widget/aboutPage.dart';
 import 'package:msg_clone/widget/bezierContainer.dart';
 import 'package:msg_clone/widget/infoPage.dart';
 import 'package:msg_clone/widget/widgetsCollention.dart';
 import 'package:page_transition/page_transition.dart';
-import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
-import 'package:clay_containers/clay_containers.dart';
 
 Widget settingPage(context, myName, muUrl, myEmail) {
   return Scaffold(
     backgroundColor: HexColor("#D4DBF5"),
     body: Stack(
       children: [
-        // Positioned(
-        //     top: MediaQuery.of(context).size.height * .15,
-        //     right: -MediaQuery.of(context).size.width * .4,
-        //     child: BezierContainer()),
         Positioned(
             bottom: MediaQuery.of(context).size.height * .0,
             right: -MediaQuery.of(context).size.width * .4,
@@ -53,7 +46,6 @@ Widget settingPage(context, myName, muUrl, myEmail) {
             ],
           ),
         ),
-
         Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -81,7 +73,16 @@ Widget settingPage(context, myName, muUrl, myEmail) {
               ElevatedButton.icon(
                 icon: Icon(Icons.help),
                 label: Text("Help"),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    PageTransition(
+                        type: PageTransitionType.rightToLeft,
+                        child: HelpPage(),
+                        inheritTheme: true,
+                        ctx: context),
+                  );
+                },
                 style: ElevatedButton.styleFrom(
                   primary: HexColor("#0C4879"),
                   onPrimary: Colors.white,
@@ -102,10 +103,6 @@ Widget settingPage(context, myName, muUrl, myEmail) {
                         inheritTheme: true,
                         ctx: context),
                   );
-                  // Navigator.push(
-                  //   context,
-                  //   MaterialPageRoute(builder: (context) => InfoAboutAppPage()),
-                  // );
                 },
                 style: ElevatedButton.styleFrom(
                   primary: Colors.black,
@@ -119,9 +116,14 @@ Widget settingPage(context, myName, muUrl, myEmail) {
                 icon: Icon(Icons.info),
                 label: Text("About"),
                 onPressed: () {
-                  showDialog(
-                      context: context,
-                      builder: (BuildContext context) => AboutPage());
+                  Navigator.push(
+                    context,
+                    PageTransition(
+                        type: PageTransitionType.rightToLeft,
+                        child: AboutPage(),
+                        inheritTheme: true,
+                        ctx: context),
+                  );
                 },
                 style: ElevatedButton.styleFrom(
                   primary: Colors.blue,
@@ -135,21 +137,7 @@ Widget settingPage(context, myName, muUrl, myEmail) {
                 icon: Icon(Icons.logout),
                 label: Text("LOG OUT"),
                 onPressed: () {
-                  // AuthMethods().signOut().then((s) {
-                  //   Navigator.pushReplacement(context,
-                  //       MaterialPageRoute(builder: (context) => SignIn()));
-                  // });
-                  print("AuthMethods SIGN OUT");
-
-                  AuthMethods().signOut();
-                  Navigator.pushAndRemoveUntil(
-                    context,
-                    MaterialPageRoute(
-                      builder: (BuildContext context) => SignIn(),
-                    ),
-                    (route) => false,
-                  );
-                  print("GET OUT FROM HERE");
+                  showAlertSignOutDialog(context);
                 },
                 style: ElevatedButton.styleFrom(
                   primary: Colors.red,

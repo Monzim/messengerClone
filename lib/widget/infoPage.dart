@@ -1,3 +1,4 @@
+import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hexcolor/hexcolor.dart';
@@ -50,8 +51,27 @@ class InfoAboutAppPage extends StatelessWidget {
                   //   "",
                   //   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
                   // ),
-                  RichTextFor(context, "Thank you for using \nmy App 😃", 20.0,
-                      FontWeight.w500),
+                  // RichTextFor(context, "Thank you for using \nmy App 😃", 20.0,
+                  //     FontWeight.w500),
+                  SizedBox(
+                    // width: 200.0,
+                    height: 50,
+                    child: TyperAnimatedTextKit(
+                      speed: Duration(milliseconds: 200),
+                      totalRepeatCount: 0,
+                      pause: Duration(milliseconds: 20000),
+                      text: [
+                        "Thank you for using \nmy App 😊",
+                      ],
+                      textStyle: GoogleFonts.portLligatSans(
+                        textStyle: Theme.of(context).textTheme.display1,
+                        fontSize: 20,
+                        fontWeight: FontWeight.w500,
+                        color: Colors.black,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
                   SizedBox(height: 15),
 
                   Container(

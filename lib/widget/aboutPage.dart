@@ -2,12 +2,12 @@ import 'package:clay_containers/clay_containers.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:msg_clone/views/home.dart';
 import 'package:msg_clone/widget/bezierContainer.dart';
 import 'package:msg_clone/widget/infoPage.dart';
 import 'package:msg_clone/widget/widgetsCollention.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:page_transition/page_transition.dart';
-import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 
 class AboutPage extends StatelessWidget {
   @override
@@ -17,7 +17,7 @@ class AboutPage extends StatelessWidget {
       body: Stack(
         children: [
           Positioned(
-              top: MediaQuery.of(context).size.height * .0,
+              top: MediaQuery.of(context).size.height * .02,
               right: -MediaQuery.of(context).size.width * .4,
               child: BezierContainerDrawerPageAbout()),
           Positioned(
@@ -32,7 +32,7 @@ class AboutPage extends StatelessWidget {
                   "Safe",
                   "Free",
                   "Wear",
-                  "Musk",
+                  "Mask",
                   "save",
                   "life",
                 ],
@@ -125,7 +125,14 @@ class AboutPage extends StatelessWidget {
             left: MediaQuery.of(context).size.width * .35,
             child: GestureDetector(
               onTap: () {
-                Navigator.pop(context);
+                Navigator.pushAndRemoveUntil(
+                  context,
+                  PageTransition(
+                      type: PageTransitionType.rotate,
+                      child: Home(),
+                      ctx: context),
+                  (route) => false,
+                );
               },
               child: ClayContainer(
                 color: Color(0xFFF2F2F2),
@@ -155,11 +162,11 @@ class AboutPage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(height: 20),
+                  SizedBox(height: 40),
                   AppNameTitle(context, 40.0, Color(0xffe46b10), Colors.black),
                   SizedBox(height: 5),
                   Text(" About Us", style: TextStyle(fontSize: 20)),
-                  SizedBox(height: 50),
+                  SizedBox(height: 45),
                   SizedBox(
                     width: 200.0,
                     child: TyperAnimatedTextKit(
