@@ -1,4 +1,5 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:clay_containers/clay_containers.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:msg_clone/services/auth.dart';
@@ -8,6 +9,8 @@ import 'package:msg_clone/widget/bezierContainer.dart';
 import 'package:msg_clone/widget/infoPage.dart';
 import 'package:msg_clone/widget/widgetsCollention.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
+import 'package:clay_containers/clay_containers.dart';
 
 Widget settingPage(context, myName, muUrl, myEmail) {
   return Scaffold(
