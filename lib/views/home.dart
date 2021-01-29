@@ -179,9 +179,15 @@ class _HomeState extends State<Home> {
                       }),
                   AppNameTitle(context, 29.0, Colors.white, Colors.white),
                   ClipRRect(
-                      borderRadius: BorderRadius.circular(30),
-                      child: Image(
-                          height: 50.0, image: NetworkImage(myProfilePic))),
+                    borderRadius: BorderRadius.circular(30),
+                    child: Image(
+                      height: 50.0,
+                      image: NetworkImage(myProfilePic) != null
+                          ? NetworkImage(myProfilePic)
+                          : AssetImage('assets/images/emoteU.png'),
+                    ),
+                  ),
+                  // backgroundImage: (profile.imgUrl == null) ? AssetImage('assets/images/emotePP.jpg') : NetworkImage(profile.imgUrl)
                 ],
               ),
             ),
@@ -273,13 +279,16 @@ class ChatRoomListTile extends StatefulWidget {
 }
 
 class _ChatRoomListTileState extends State<ChatRoomListTile> {
-  String profilePicUrl = "", name = "", username = "";
+  String profilePicUrl =
+          "https://images.pexels.com/photos/3612885/pexels-photo-3612885.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
+      name = "",
+      username = "";
 
   getThisUserInfo() async {
     username =
         widget.chatRoomId.replaceAll(widget.myUserName, "").replaceAll("_", "");
     QuerySnapshot querySnapshot = await DatabaseMethods().getUserInfo(username);
-    print("something the data we are getting ${querySnapshot.docs[0].id}");
+    // print("something the data we are getting ${querySnapshot.docs[0].id}");
     name = "${querySnapshot.docs[0]["name"]}";
     profilePicUrl = querySnapshot.docs[0]["imgUrl"];
     setState(() {});
@@ -295,16 +304,6 @@ class _ChatRoomListTileState extends State<ChatRoomListTile> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        //before going to charRoom
-        // Navigator.push(
-        //     context,
-        //     MaterialPageRoute(
-        //       builder: (context) => ChatScreen(
-        //         username,
-        //         name,
-        //       ),
-        //     ));
-
         Navigator.push(
             context,
             PageTransition(
@@ -318,10 +317,12 @@ class _ChatRoomListTileState extends State<ChatRoomListTile> {
         children: [
           ClipRRect(
             borderRadius: BorderRadius.circular(30),
-            child: Image.network(
-              profilePicUrl,
-              height: 40,
-              width: 40,
+            child: Image(
+              height: 45.0,
+              width: 45.0,
+              image: NetworkImage(profilePicUrl) == null
+                  ? AssetImage('assets/images/emoteU.png')
+                  : NetworkImage(profilePicUrl),
             ),
           ),
           SizedBox(width: 12),
@@ -334,16 +335,6 @@ class _ChatRoomListTileState extends State<ChatRoomListTile> {
                     color: Colors.white,
                   )),
               SizedBox(height: 3),
-
-              // Text(
-              //   widget.lastMessage,
-              //   overflow: TextOverflow.ellipsis,
-              //   style: TextStyle(
-              //     fontSize: 16,
-              //     color: HexColor("#E6F4F7"),
-              //     fontWeight: FontWeight.w500,
-              //   ),
-              // ),
               Container(
                 width: 200,
                 child: Text(
