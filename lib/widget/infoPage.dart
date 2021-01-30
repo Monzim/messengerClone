@@ -47,12 +47,6 @@ class InfoAboutAppPage extends StatelessWidget {
                         ]),
                   ),
                   SizedBox(height: 15),
-                  // Text(
-                  //   "",
-                  //   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
-                  // ),
-                  // RichTextFor(context, "Thank you for using \nmy App 😃", 20.0,
-                  //     FontWeight.w500),
                   SizedBox(
                     // width: 200.0,
                     height: 50,
@@ -73,7 +67,6 @@ class InfoAboutAppPage extends StatelessWidget {
                     ),
                   ),
                   SizedBox(height: 15),
-
                   Container(
                     width: 200.0,
                     height: 200.0,
@@ -147,7 +140,6 @@ class InfoAboutAppPage extends StatelessWidget {
                       ),
                     ),
                   ),
-
                   SizedBox(height: 10),
                   Container(
                     height: 40,

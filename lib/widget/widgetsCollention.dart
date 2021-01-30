@@ -148,9 +148,8 @@ class _LoginPageState extends State<LoginPage> {
                           AuthMethods().signInWithGoogle(context);
                         },
                       ),
-                      // SizedBox(height: height * .2),
+
                       _createAccountLabel(),
-                      // popUPmenuD(context),
                     ],
                   ),
                 ),

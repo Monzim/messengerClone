@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:msg_clone/helperFunctions/sharedpre_helper.dart';
 import 'package:msg_clone/services/database.dart';
@@ -16,7 +17,11 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   bool isSearching = false;
   Stream userStream, chatRoomsStream;
-  String myName, myProfilePic, myUserName, myEmail;
+  String myName,
+      myProfilePic =
+          "https://images.pexels.com/photos/3612885/pexels-photo-3612885.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
+      myUserName,
+      myEmail;
 
   TextEditingController searchUserNameEditingController =
       TextEditingController();
@@ -84,14 +89,27 @@ class _HomeState extends State<Home> {
       },
       child: Row(
         children: [
+          // ClipRRect(
+          //     borderRadius: BorderRadius.circular(30),
+          //     child: Image(
+          //       height: 40.0,
+          //       image: NetworkImage(profileUrl) != null
+          //           ? NetworkImage(profileUrl)
+          //           : AssetImage('assets/images/emoteU.png'),
+          //     )),
           ClipRRect(
-            borderRadius: BorderRadius.circular(30),
-            child: Image.network(
-              profileUrl,
-              height: 40,
-              width: 40,
-            ),
-          ),
+              borderRadius: BorderRadius.circular(30),
+              child: myProfilePic.toString() == null
+                  ? const Image(
+                      height: 45.0,
+                      width: 45.0,
+                      image: AssetImage('assets/images/emoteU.png'))
+                  : Image(
+                      height: 45.0,
+                      width: 45.0,
+                      image: NetworkImage(profileUrl),
+                    )),
+
           SizedBox(width: 12),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -122,10 +140,10 @@ class _HomeState extends State<Home> {
                 itemBuilder: (context, index) {
                   DocumentSnapshot ds = snapshot.data.docs[index];
                   return searchFieldUserTile(
-                    profileUrl: ds["imgUrl"],
-                    name: ds["name"],
-                    email: ds["email"],
-                    username: ds["username"],
+                    profileUrl: ds.data()["imgUrl"],
+                    name: ds.data()["name"],
+                    email: ds.data()["email"],
+                    username: ds.data()["username"],
                   );
                 },
               )
@@ -178,16 +196,20 @@ class _HomeState extends State<Home> {
                                     context, myName, myProfilePic, myEmail)));
                       }),
                   AppNameTitle(context, 29.0, Colors.white, Colors.white),
+
+                  //Top Header Pic
                   ClipRRect(
-                    borderRadius: BorderRadius.circular(30),
-                    child: Image(
-                      height: 50.0,
-                      image: NetworkImage(myProfilePic) != null
-                          ? NetworkImage(myProfilePic)
-                          : AssetImage('assets/images/emoteU.png'),
-                    ),
-                  ),
-                  // backgroundImage: (profile.imgUrl == null) ? AssetImage('assets/images/emotePP.jpg') : NetworkImage(profile.imgUrl)
+                      borderRadius: BorderRadius.circular(30),
+                      child: myProfilePic.toString() == null
+                          ? const Image(
+                              height: 45.0,
+                              width: 45.0,
+                              image: AssetImage('assets/images/emoteU.png'))
+                          : Image(
+                              height: 45.0,
+                              width: 45.0,
+                              image: NetworkImage(myProfilePic),
+                            )),
                 ],
               ),
             ),
@@ -209,6 +231,14 @@ class _HomeState extends State<Home> {
                           isSearching = false;
                           searchUserNameEditingController.text = "";
                           setState(() {});
+                          Navigator.pushAndRemoveUntil(
+                            context,
+                            PageTransition(
+                                type: PageTransitionType.rightToLeft,
+                                child: Home(),
+                                ctx: context),
+                            (route) => true,
+                          );
                         },
                         child: Padding(
                             padding: EdgeInsets.only(right: 12),
@@ -308,39 +338,60 @@ class _ChatRoomListTileState extends State<ChatRoomListTile> {
             context,
             PageTransition(
               type: PageTransitionType.scale,
-              alignment: Alignment.center,
-              child: ChatScreen(username, name),
+              alignment: Alignment.centerLeft,
+              child: ChatScreen(
+                username,
+                name,
+              ),
             ));
       },
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.baseline,
         children: [
           ClipRRect(
-            borderRadius: BorderRadius.circular(30),
-            child: Image(
-              height: 45.0,
-              width: 45.0,
-              image: NetworkImage(profilePicUrl) == null
-                  ? AssetImage('assets/images/emoteU.png')
-                  : NetworkImage(profilePicUrl),
-            ),
-          ),
+              borderRadius: BorderRadius.circular(30),
+              child: profilePicUrl.toString() == null
+                  ? const Image(
+                      height: 45.0,
+                      width: 45.0,
+                      image: AssetImage('assets/images/emoteU.png'))
+                  : Image(
+                      height: 45.0,
+                      width: 45.0,
+                      image: NetworkImage(profilePicUrl),
+                    )),
           SizedBox(width: 12),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(name,
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: Colors.white,
-                  )),
+              Text(
+                name,
+                //   style: TextStyle(
+                //     fontSize: 16,
+                //     color: Colors.white,
+                //   ),
+                style: GoogleFonts.lato(
+                  textStyle: Theme.of(context).textTheme.display1,
+                  fontSize: 16,
+                  fontStyle: FontStyle.italic,
+                  fontWeight: FontWeight.w800,
+                  color: Colors.white,
+                ),
+              ),
               SizedBox(height: 3),
               Container(
                 width: 200,
                 child: Text(
                   widget.lastMessage,
-                  style: TextStyle(
+                  // style: TextStyle(
+                  //   fontSize: 16,
+                  //   color: HexColor("#E6F4F7"),
+                  // ),
+                  style: GoogleFonts.lato(
+                    textStyle: Theme.of(context).textTheme.display1,
                     fontSize: 16,
+                    fontWeight: FontWeight.w700,
+                    fontStyle: FontStyle.italic,
                     color: HexColor("#E6F4F7"),
                   ),
                   overflow: TextOverflow.visible,

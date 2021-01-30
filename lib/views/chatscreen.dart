@@ -4,6 +4,7 @@ import 'package:hexcolor/hexcolor.dart';
 import 'package:msg_clone/helperFunctions/sharedpre_helper.dart';
 import 'package:msg_clone/services/database.dart';
 import 'package:random_string/random_string.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class ChatScreen extends StatefulWidget {
   final String chatWithUserName, name;
@@ -113,7 +114,12 @@ class _ChatScreenState extends State<ChatScreen> {
               color: Colors.white,
               // fontSize: 16.5,
             ),
-            // onTap: () {},
+            // style: GoogleFonts.portLligatSans(
+            //   textStyle: Theme.of(context).textTheme.display1,
+            //   fontSize: 14.9,
+            //   fontWeight: FontWeight.normal,
+            //   color: Colors.white,
+            // ),
           ),
         ),
       ],
@@ -158,9 +164,19 @@ class _ChatScreenState extends State<ChatScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.redAccent,
-        title: Text(widget.name),
+        elevation: 0.0,
+        backgroundColor: HexColor("#3D6AF2"),
+        title: Text(
+          widget.name,
+          style: GoogleFonts.portLligatSans(
+            textStyle: Theme.of(context).textTheme.display1,
+            fontSize: 23.5,
+            fontWeight: FontWeight.w500,
+            color: Colors.white,
+          ),
+        ),
       ),
+
       backgroundColor: Colors.black,
       // message BOX
       body: Container(
@@ -190,7 +206,7 @@ class _ChatScreenState extends State<ChatScreen> {
                         bottomRight: Radius.circular(15),
                       ),
                       border: Border.all(
-                        color: Colors.orange,
+                        color: HexColor("#04BF8A"),
                         width: 1.5,
                         style: BorderStyle.solid,
                       ),
@@ -204,16 +220,29 @@ class _ChatScreenState extends State<ChatScreen> {
                           // maxLength: 1000,
                           minLines: 1,
                           maxLines: 4,
-                          style: TextStyle(color: Colors.white),
+                          style: GoogleFonts.portLligatSans(
+                            textStyle: Theme.of(context).textTheme.display1,
+                            fontSize: 18,
+                            fontWeight: FontWeight.w500,
+                            color: Colors.white,
+                          ),
+
                           controller: messageTextEditingController,
                           onChanged: (value) {
                             addMessage(false);
                           },
                           decoration: InputDecoration(
                             hintText: "type a message",
-                            hintStyle: TextStyle(
-                                fontWeight: FontWeight.w500,
-                                color: Colors.white.withOpacity(0.5)),
+                            // hintStyle: TextStyle(
+                            //   fontWeight: FontWeight.w500,
+                            //   color: Colors.white.withOpacity(0.5),
+                            // ),
+                            hintStyle: GoogleFonts.portLligatSans(
+                              textStyle: Theme.of(context).textTheme.display1,
+                              fontSize: 15,
+                              fontWeight: FontWeight.w500,
+                              color: Colors.white.withOpacity(0.5),
+                            ),
                             border: InputBorder.none,
                           ),
                         )),
@@ -224,15 +253,19 @@ class _ChatScreenState extends State<ChatScreen> {
                     onPressed: () {
                       addMessage(true);
                     },
-                    backgroundColor: Colors.black,
-                    splashColor: HexColor("#B26157"),
+                    backgroundColor: Colors.black.withOpacity(0.0),
+                    splashColor: Colors.white,
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: Icon(
-                        Icons.send,
-                        color: Colors.red,
-                        size: 40,
-                      ),
+                      // child: Transform.rotate(
+                      //   angle: 100,
+                      //   child: Icon(
+                      //     Icons.send,
+                      //     color: Colors.red,
+                      //     size: 40,
+                      //   ),
+                      // ),
+                      child: Image.asset('assets/images/send0.png'),
                     ),
                   ),
                 ],
