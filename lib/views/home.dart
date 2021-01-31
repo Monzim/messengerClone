@@ -89,14 +89,6 @@ class _HomeState extends State<Home> {
       },
       child: Row(
         children: [
-          // ClipRRect(
-          //     borderRadius: BorderRadius.circular(30),
-          //     child: Image(
-          //       height: 40.0,
-          //       image: NetworkImage(profileUrl) != null
-          //           ? NetworkImage(profileUrl)
-          //           : AssetImage('assets/images/emoteU.png'),
-          //     )),
           ClipRRect(
               borderRadius: BorderRadius.circular(30),
               child: myProfilePic.toString() == null
@@ -109,7 +101,6 @@ class _HomeState extends State<Home> {
                       width: 45.0,
                       image: NetworkImage(profileUrl),
                     )),
-
           SizedBox(width: 12),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -293,6 +284,42 @@ class _HomeState extends State<Home> {
             isSearching
                 ? Expanded(child: searchUserList())
                 : Expanded(child: chatRoomsList()),
+            // FloatingActionButton(
+            //   backgroundColor: HexColor("#003B74"),
+            //   child: Icon(Icons.refresh),
+            //   onPressed: () {
+            //     Navigator.pushAndRemoveUntil(
+            //       context,
+            //       PageTransition(
+            //           type: PageTransitionType.rotate,
+            //           child: Home(),
+            //           ctx: context),
+            //       (route) => false,
+            //     );
+            //   },
+            // ),
+            ElevatedButton.icon(
+              icon: Icon(Icons.refresh),
+              label: Text("Refresh"),
+              onPressed: () {
+                Navigator.pushAndRemoveUntil(
+                  context,
+                  PageTransition(
+                      type: PageTransitionType.fade,
+                      child: Home(),
+                      ctx: context),
+                  (route) => false,
+                );
+              },
+              style: ElevatedButton.styleFrom(
+                primary: Colors.amber,
+                onPrimary: Colors.black,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(32.0),
+                ),
+              ),
+            ),
+            SizedBox(height: 3)
           ],
         ),
       ),

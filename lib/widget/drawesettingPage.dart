@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
-import 'package:msg_clone/services/auth.dart';
 import 'package:msg_clone/views/helpPage.dart';
-import 'package:msg_clone/views/signin.dart';
 import 'package:msg_clone/widget/aboutPage.dart';
 import 'package:msg_clone/widget/bezierContainer.dart';
 import 'package:msg_clone/widget/infoPage.dart';

@@ -187,6 +187,7 @@ class InfoAboutAppPage extends StatelessWidget {
   }
 }
 
+// ignore: non_constant_identifier_names
 RichTextFor(context, textName, fontsize, fontWeight) {
   return RichText(
     textAlign: TextAlign.center,
@@ -202,6 +203,7 @@ RichTextFor(context, textName, fontsize, fontWeight) {
   );
 }
 
+// ignore: non_constant_identifier_names
 AppNameTitle(context, mainFontsize, color1, color2) {
   return RichText(
       textAlign: TextAlign.center,
